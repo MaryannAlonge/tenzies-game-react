@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './style.css';
 import Die from "./Die"
+import {nanoid} from "nanoid"
 
 
 function App() {
@@ -12,7 +13,10 @@ function App() {
     //loop through them 10 times
     for (let i = 0; i < 10; i++) {
       // push a random number from 1-6 to my array
-      newDice.push(Math.ceil(Math.random() * 6))
+      newDice.push({
+        value: Math.ceil(Math.random() * 6), isHeld: false,
+        id: nanoid()
+      })
     }
     return newDice
   }
@@ -21,7 +25,8 @@ function App() {
     setDice(allNewDice())
   }
 
-  const diceElements = dice.map(die => <Die value={die} />)
+  const diceElements = dice.map(die => 
+  <Die key={die.id}value={die.value} isHeld={die.isHeld}/>)
 
   return (
     <main>
